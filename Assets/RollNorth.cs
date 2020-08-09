@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RollNorth : MonoBehaviour
 {
-
+    public Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
@@ -12,8 +12,8 @@ public class RollNorth : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        rb.AddForce(0, 0, 1000 * Time.deltaTime);
     }
 }
