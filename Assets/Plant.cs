@@ -27,15 +27,15 @@ public class Plant : MonoBehaviour
         this.energy -= 1.0f * Time.deltaTime;
         if (this.energy <= -1) {
             // Oh no we died!
-            Debug.Log("OH GOD");
+            Debug.Log("Plant has died :(");
             GameObject.Destroy(gameObject);
         }
 
         // Can this plant receive any light?
-        Vector3 upVec = new Vector3(0f, .866f, .5f);
+        Vector3 upVec = new Vector3(0f, .866f, -.5f);
         Vector3 pos = gameObject.transform.position;
         Vector3 leafLocation = new Vector3(pos.x, pos.y + this.size, pos.z);
-        if (Physics.Raycast(leafLocation, upVec, 10f)) {
+        if (Physics.Raycast(leafLocation, upVec, 50f)) {
             // We get no energy this time step :(
         }
         else {
