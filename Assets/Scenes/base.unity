@@ -249,6 +249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bunny: {fileID: 6451451983261541300, guid: 0ed10e69285cc4389bb9ad789b67f104, type: 3}
   fox: {fileID: 3910571087578594383, guid: 9f0c23849cffd4b17a2b7072be71d677, type: 3}
+  plant2: {fileID: 4985032225920584332, guid: 01b02624fe8004a608bb037ddb88d07f, type: 3}
 --- !u!4 &268804439
 Transform:
   m_ObjectHideFlags: 0
@@ -352,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 911157854}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
   m_LocalScale: {x: 100, y: 1, z: 100}
   m_Children:
   - {fileID: 2034973433}

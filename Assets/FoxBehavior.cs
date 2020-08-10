@@ -27,12 +27,12 @@ public class FoxBehavior : MonoBehaviour
                 GameObject.Destroy(target);
             }
         }
-        
+
         // else {
         //     rb.AddForce(new Vector3(0.0f,0.0f,0.0f),ForceMode.VelocityChange);
         // }
         // homf!
-        
+
         //rb.AddForce(0, 0, 1000 * Time.deltaTime);
     }
 
@@ -43,7 +43,7 @@ public class FoxBehavior : MonoBehaviour
         float minDist = 10000000000f;
         GameObject nearestThing = gameObject;
         foreach (Collider c in nearbyObjects){
-            Debug.Log($"name is {c.gameObject.name}");
+            // Debug.Log($"name is {c.gameObject.name}");
             if (c.gameObject.name.StartsWith(thing)){
                 float dist = Vector3.Distance(rb.position,c.gameObject.transform.position);
                 if (dist < minDist){
