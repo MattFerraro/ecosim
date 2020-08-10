@@ -29,10 +29,10 @@ public class WholeGame : MonoBehaviour
 
     Transform CreateBunny () {
 		Transform t = Instantiate(bunny);
-		t.localPosition = new Vector3(Random.value * 100 - 50, 3, Random.value * 100 - 50);
+		t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
         return t;
 	}
-    
+
     Transform CreateFox () {
 		Transform t = Instantiate(fox);
 		t.localPosition = new Vector3(0f,3f,0f);// Random.value * 100 - 50, 3, Random.value * 100 - 50);
