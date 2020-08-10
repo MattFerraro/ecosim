@@ -40,14 +40,14 @@ public class WholeGame : MonoBehaviour
 
     Transform CreateFox () {
 		Transform t = Instantiate(fox);
-		t.localPosition = new Vector3(0f,3f,0f);// Random.value * 100 - 50, 3, Random.value * 100 - 50);
+		t.localPosition = new Vector3(4f,1f,0f);// Random.value * 100 - 50, 3, Random.value * 100 - 50);
         return t;
 	}
 
     GameObject CreatePlant() {
         GameObject go = (GameObject)Instantiate(plant, new Vector3(-2f, 0, -2f), Quaternion.identity);
         Plant plt = go.GetComponent<Plant>();
-        plt.SetGenome(plant, 3, .3f, 1, 1);
+        plt.SetGenome(plant, 3, .3f, 3f, 1);
         return go;
     }
 }
