@@ -13,21 +13,27 @@ public class Plant : MonoBehaviour
     public float growthSpeed;
     public float energyCollectionEfficiency;
 
+    public float restingEnergy;
+    public float energyPerSeed;
 
+    public float h;
+    public float s;
+    public float v;
 
     // Variables related to the current state of the plant:
     public float energy;
     public float size;
 
+    // public Dictionary<string, Gene> Fields;
+
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // First we gotta subtract some energy
         this.energy -= 1.0f * Time.deltaTime;
         if (this.energy <= -1) {
             // Oh no we died!
-            Debug.Log("Plant has died :(");
             GameObject.Destroy(gameObject);
         }
 
@@ -52,42 +58,93 @@ public class Plant : MonoBehaviour
             }
             else {
                 // In the reproduction phase, we just spend our energy on seeds
-                if (this.energy > 2) {
-                    createOffspring();
-                    this.energy -= 2;
-                    // GameObject.Destroy(gameObject);
+                if (energy > energyPerSeed + restingEnergy) {
+                    createOffspring(energyPerSeed / 10); // there is a 10x overpayment here. Building seeds is expensive!
+                    energy -= energyPerSeed;
                 }
             }
         }
 
     }
 
-    void createOffspring() {
+    void createOffspring(float seedEnergy) {
         Vector3 offset = Random.insideUnitCircle * 10;
         Vector3 offsetXZ = new Vector3(offset.x, 0, offset.y);
 
         Vector3 pos = gameObject.transform.position + offsetXZ;
 
         // Check if the position we've selected is valid
-        if (Mathf.Abs(pos.x) >= 10 || Mathf.Abs(pos.z) >= 10) {
+        if (Mathf.Abs(pos.x) >= 30 || Mathf.Abs(pos.z) >= 30) {
             return;
         }
-
 
         // Unity doesn't let you use meaningful constructors.
         // The way to pass down the genome is explicitely with a setter:
         GameObject go = (GameObject)Instantiate(prefab, pos, Quaternion.identity);
         Plant plt = go.GetComponent<Plant>();
-        plt.SetGenome(prefab, this.maxSize, this.growthSpeed, this.energyCollectionEfficiency, 2);
+        plt.SetGenome(
+            prefab: prefab,
+            maxSize: mutate(maxSize),
+            growthSpeed: growthSpeed,
+            energyCollectionEfficiency: energyCollectionEfficiency,
+            inputEnergy: seedEnergy,
+            h: fmutate(h),
+            s: fmutate(s),
+            v: fmutate(v),
+            restingEnergy: mutate(restingEnergy),
+            energyPerSeed: mutate(energyPerSeed));
     }
 
-    public void SetGenome(GameObject prefab, float maxSize, float growthSpeed, float energyCollectionEfficiency, float inputEnergy) {
+    float mutate(float input) {
+        float rate = 0.1f;
+        return Random.value * rate - rate/2 + input;
+    }
+
+    float fmutate(float input) {
+        return cap(mutate(input));
+    }
+
+    float cap(float input) {
+        return Mathf.Clamp(input, 0, 1);
+    }
+
+    public void SetGenome(
+            GameObject prefab,
+            float maxSize,
+            float growthSpeed,
+            float energyCollectionEfficiency,
+            float inputEnergy,
+            float h,
+            float s,
+            float v,
+            float restingEnergy,
+            float energyPerSeed) {
         this.prefab = prefab;
         this.maxSize = maxSize;
         this.growthSpeed = growthSpeed;
         this.energyCollectionEfficiency = energyCollectionEfficiency;
         this.energy = inputEnergy;
         this.size = 0.01f;
-        this.gameObject.transform.localScale = new Vector3(this.size, this.size, this.size);
+        this.h = h;
+        this.s = s;
+        this.v = v;
+        this.restingEnergy = restingEnergy;
+        this.energyPerSeed = energyPerSeed;
+
+        this.gameObject.transform.localScale = new Vector3(size, size, size);
+
+        Transform[] children = gameObject.GetComponentsInChildren<Transform>(true);
+        foreach (Transform item in children) {
+            if (item.name == "Canopy") {
+                //gameObject.GetComponent<Renderer>().material.color = new Color(1,1,1);
+                item.gameObject.GetComponent<Renderer>().material.color = Color.HSVToRGB(h, s, v);
+            }
+        }
     }
+
+    // public void SetGenomeFields(GameObject prefab, Dictionary<string, Gene> newFields) {
+    //     this.prefab = prefab;
+    //     Fields = newFields;
+    // }
+
 }
