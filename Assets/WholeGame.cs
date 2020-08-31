@@ -17,11 +17,9 @@ public class WholeGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < 10; i++ ) {
-
-            bunnies.Add(CreateBunny());
-        }
-        foxes.Add(CreateFox());
+        // CreateStartingBunnies();
+        bunnies.AddRange(CreateNBunnies(10));
+        foxes.AddRange(CreateNFoxes(2));
 
         CreateStartingPlants();
     }
@@ -32,16 +30,24 @@ public class WholeGame : MonoBehaviour
 
     }
 
-    Transform CreateBunny () {
-		Transform t = Instantiate(bunny);
-		t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
-        return t;
+    List<Transform> CreateNBunnies (int n) {
+        List<Transform> result = new List<Transform>();
+        for (int i = 0; i < n; i++ ) {
+		    Transform t = Instantiate(bunny);
+		    t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
+            result.Add(t);
+        }
+        return result;
 	}
 
-    Transform CreateFox () {
-		Transform t = Instantiate(fox);
-		t.localPosition = new Vector3(4f,1f,0f);// Random.value * 100 - 50, 3, Random.value * 100 - 50);
-        return t;
+    List<Transform> CreateNFoxes (int n) {
+		List<Transform> result = new List<Transform>();
+        for (int i = 0; i < n; i++ ) {
+		    Transform t = Instantiate(fox);
+		    t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
+            result.Add(t);
+        }
+        return result;
 	}
 
     void CreateStartingPlants() {

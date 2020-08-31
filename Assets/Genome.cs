@@ -21,6 +21,22 @@ public class PlantGenome {
     }
 }
 
+public class AnimalGenome {
+    public Gene maxSize;
+    public Gene pace;
+    public Gene digestionEfficiency;
+    AnimalGenome() {
+
+    }
+}
+
+public class PredatorGenome {
+    public AnimalGenome animal;
+    //public diet;, list of prey?
+    public Gene preySize;
+}
+
+
 public class Gene {
     float min;
     float max;

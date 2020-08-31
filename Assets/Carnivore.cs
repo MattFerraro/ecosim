@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FoxBehavior : MonoBehaviour
+public class Carnivore : MonoBehaviour
 {
     public Rigidbody rb;
     float sightRange = 200.0f;
