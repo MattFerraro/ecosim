@@ -88,24 +88,20 @@ public class Plant : MonoBehaviour
             growthSpeed: growthSpeed,
             energyCollectionEfficiency: energyCollectionEfficiency,
             inputEnergy: seedEnergy,
-            h: fmutate(h),
-            s: fmutate(s),
-            v: fmutate(v),
+            h: normalized_mutate(h),
+            s: normalized_mutate(s),
+            v: normalized_mutate(v),
             restingEnergy: mutate(restingEnergy),
             energyPerSeed: mutate(energyPerSeed));
     }
 
-    float mutate(float input) {
-        float rate = 0.1f;
-        return Random.value * rate - rate/2 + input;
+    float mutate(float input, float rate=0.1f) {
+        return rate * (Random.value - 0.5f) + input;
     }
 
-    float fmutate(float input) {
-        return cap(mutate(input));
-    }
-
-    float cap(float input) {
-        return Mathf.Clamp(input, 0, 1);
+/// return a mutation of input, bounded by 0 and 1.
+    float normalized_mutate(float input) {
+        return Mathf.Clamp(mutate(input), 0, 1);
     }
 
     public void SetGenome(
