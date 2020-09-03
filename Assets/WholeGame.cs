@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class WholeGame : MonoBehaviour
 {
-    // TODO: convert these Transforms to GameObjects like plant
-    public Transform bunny;
-    public Transform fox;
+    public GameObject bunny;
+    public GameObject fox;
 
     public GameObject plant;
-    List<Transform> bunnies = new List<Transform>();
-    List<Transform> foxes = new List<Transform>();
-
-    // List<List<Transform>> animals;
+    List<GameObject> bunnies = new List<GameObject>();
+    List<GameObject> foxes = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
-        // CreateStartingBunnies();
+        // create starting animals
         bunnies.AddRange(CreateNBunnies(10));
         foxes.AddRange(CreateNFoxes(2));
+        // test breed method
 
         CreateStartingPlants();
     }
@@ -30,22 +28,30 @@ public class WholeGame : MonoBehaviour
 
     }
 
-    List<Transform> CreateNBunnies (int n) {
-        List<Transform> result = new List<Transform>();
+    List<GameObject> CreateNBunnies (int n) {
+		List<GameObject> result = new List<GameObject>();
         for (int i = 0; i < n; i++ ) {
-		    Transform t = Instantiate(bunny);
-		    t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
-            result.Add(t);
+		    GameObject c = (GameObject)Instantiate(
+                bunny, 
+                new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
+                Quaternion.identity
+            );
+            Herbivore herb = c.GetComponent<Herbivore>();
+            result.Add(c);
         }
         return result;
 	}
 
-    List<Transform> CreateNFoxes (int n) {
-		List<Transform> result = new List<Transform>();
+    List<GameObject> CreateNFoxes (int n) {
+		List<GameObject> result = new List<GameObject>();
         for (int i = 0; i < n; i++ ) {
-		    Transform t = Instantiate(fox);
-		    t.localPosition = new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50);
-            result.Add(t);
+		    GameObject c = (GameObject)Instantiate(
+                fox, 
+                new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
+                Quaternion.identity
+            );
+            Carnivore carn = c.GetComponent<Carnivore>();
+            result.Add(c);
         }
         return result;
 	}

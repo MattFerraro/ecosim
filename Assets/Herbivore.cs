@@ -1,45 +1,39 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Carnivore : MonoBehaviour
+public class Herbivore : MonoBehaviour
 {
     public Rigidbody rb;
-    float sightRange = 40.0f;
+    float sightRange = 200.0f;
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
-        // Debug.Log("we're here!");
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        // find that nearest bunny
-        GameObject target = closestVisible("Bunny");
+        // find that nearest tree
+        GameObject target = closestVisible("Tree");
         if (target != null){
+            Debug.Log("Found a tree!");
             // move to it
             if (Vector3.Distance(rb.position,target.transform.position) > 1.1){
                 Vector3 move = Vector3.MoveTowards(rb.position,target.transform.position,0.1f);
                 rb.MovePosition(move);
             } else {
-                GameObject.Destroy(target);
+                //GameObject.Destroy(target);
+                rb.AddForce(new Vector3(0.0f,0.0f,0.0f),ForceMode.VelocityChange);
             }
         }
-
-        // else {
-        //     rb.AddForce(new Vector3(0.0f,0.0f,0.0f),ForceMode.VelocityChange);
-        // }
-        // homf!
-
-        //rb.AddForce(0, 0, 1000 * Time.deltaTime);
     }
 
     GameObject closestVisible(string thing){
         // find nearby things!
         Collider[] nearbyObjects = Physics.OverlapSphere(rb.position,sightRange);
-        // find closest bunny
+        // find closest thing
         float minDist = 10000000000f;
         GameObject nearestThing = gameObject;
         foreach (Collider c in nearbyObjects){
@@ -50,6 +44,8 @@ public class Carnivore : MonoBehaviour
                     minDist = dist;
                     nearestThing = c.gameObject;
                 }
+            } else {
+                Debug.Log("Nearby Object: "+c.gameObject.name);
             }
         }
         if (nearestThing == gameObject){

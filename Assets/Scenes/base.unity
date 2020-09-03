@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1293a4e4e6f4f49a98012a0f55b44200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bunny: {fileID: 6451451983261541300, guid: 0ed10e69285cc4389bb9ad789b67f104, type: 3}
-  fox: {fileID: 3910571087578594383, guid: 9f0c23849cffd4b17a2b7072be71d677, type: 3}
+  bunny: {fileID: 6451451983261541299, guid: 0ed10e69285cc4389bb9ad789b67f104, type: 3}
+  fox: {fileID: 4189699114141460218, guid: 9f0c23849cffd4b17a2b7072be71d677, type: 3}
   plant: {fileID: 4985032225920584332, guid: 01b02624fe8004a608bb037ddb88d07f, type: 3}
 --- !u!4 &268804439
 Transform:

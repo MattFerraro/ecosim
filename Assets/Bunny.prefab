@@ -14,8 +14,9 @@ GameObject:
   - component: {fileID: 6451451983261541297}
   - component: {fileID: 6451451983261541296}
   - component: {fileID: 6451451983261541301}
+  - component: {fileID: -6287516638958409148}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Bunny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -120,9 +121,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6451451983261541299}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc1ca2eb3fc2f40d39085e9ac378f9a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 6451451983261541296}
+--- !u!114 &-6287516638958409148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6451451983261541299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecd40c23ed3654526b0c4754b77843b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 6451451983261541296}
