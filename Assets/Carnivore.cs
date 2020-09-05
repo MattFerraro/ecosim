@@ -5,6 +5,7 @@ using UnityEngine;
 public class Carnivore : MonoBehaviour
 {
     public Rigidbody rb;
+    public PredatorGenome genome;
     float sightRange = 40.0f;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,7 @@ public class Carnivore : MonoBehaviour
         if (target != null){
             // move to it
             if (Vector3.Distance(rb.position,target.transform.position) > 1.1){
-                Vector3 move = Vector3.MoveTowards(rb.position,target.transform.position,0.1f);
+                Vector3 move = Vector3.MoveTowards(rb.position,target.transform.position,0.08f);
                 rb.MovePosition(move);
             } else {
                 GameObject.Destroy(target);

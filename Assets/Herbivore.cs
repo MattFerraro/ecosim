@@ -5,7 +5,8 @@ using UnityEngine;
 public class Herbivore : MonoBehaviour
 {
     public Rigidbody rb;
-    float sightRange = 200.0f;
+    public AnimalGenome genome;
+    float sightRange = 30.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +18,12 @@ public class Herbivore : MonoBehaviour
     {
         // find that nearest tree
         GameObject target = closestVisible("Tree");
+        GameObject danger = closestVisible("Fox");
         if (target != null){
-            Debug.Log("Found a tree!");
+            // Debug.Log("Found a tree!");
             // move to it
             if (Vector3.Distance(rb.position,target.transform.position) > 1.1){
-                Vector3 move = Vector3.MoveTowards(rb.position,target.transform.position,0.1f);
+                Vector3 move = Vector3.MoveTowards(rb.position,target.transform.position,0.07f);
                 rb.MovePosition(move);
             } else {
                 //GameObject.Destroy(target);
@@ -30,29 +32,25 @@ public class Herbivore : MonoBehaviour
         }
     }
 
+    public void SetGenome(AnimalGenome archetype){
+        this.genome = archetype;
+    }
     GameObject closestVisible(string thing){
         // find nearby things!
         Collider[] nearbyObjects = Physics.OverlapSphere(rb.position,sightRange);
         // find closest thing
         float minDist = 10000000000f;
-        GameObject nearestThing = gameObject;
+        GameObject nearestThing = null;
         foreach (Collider c in nearbyObjects){
             // Debug.Log($"name is {c.gameObject.name}");
             if (c.gameObject.name.StartsWith(thing)){
                 float dist = Vector3.Distance(rb.position,c.gameObject.transform.position);
-                if (dist < minDist){
+                if (dist < minDist & c.gameObject != gameObject){
                     minDist = dist;
                     nearestThing = c.gameObject;
                 }
-            } else {
-                Debug.Log("Nearby Object: "+c.gameObject.name);
             }
         }
-        if (nearestThing == gameObject){
-            return null;
-        }
-        else {
-            return nearestThing;
-        }
+        return nearestThing;
     }
 }

@@ -18,6 +18,7 @@ public class WholeGame : MonoBehaviour
         bunnies.AddRange(CreateNBunnies(10));
         foxes.AddRange(CreateNFoxes(2));
         // test breed method
+        AnimalGenome.cross((AnimalGenome)foxes[0].GetComponent<Carnivore>().genome,(AnimalGenome)foxes[1].GetComponent<Carnivore>().genome);
 
         CreateStartingPlants();
     }

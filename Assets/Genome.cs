@@ -13,12 +13,12 @@ public class PlantGenome {
     public Gene maxSize;
     public Gene growthSpeed;
     public Gene energyCollectionEfficiency;
-
+    // color genes
     public Gene h;
     public Gene s;
     public Gene v;
 
-    PlantGenome() {
+    public PlantGenome() {
 
     }
 }
@@ -26,11 +26,16 @@ public class PlantGenome {
 public class AnimalGenome {
     public Gene maxSize;
     public Gene pace;
+    public Gene jump;
     public Gene digestionEfficiency;
-    AnimalGenome() {
+    // color genes
+    public Gene h;
+    public Gene s;
+    public Gene v;
+    public AnimalGenome() {
 
     }
-    void breed(AnimalGenome a, AnimalGenome b) {
+    public static void cross(AnimalGenome a, AnimalGenome b) {
         AnimalGenome result = new AnimalGenome();
         // property checker
         FieldInfo[] fieldInfos = typeof(AnimalGenome).GetFields(BindingFlags.Public);
@@ -41,18 +46,40 @@ public class AnimalGenome {
     }
 }
 
-public class PredatorGenome {
-    public AnimalGenome animal;
+public class PredatorGenome : AnimalGenome {
     //public diet;, list of prey?
+    //
     public Gene preySize;
 }
 
 
+/* 
+any gene has a value between 0 and 1,
+and a scaling factor (default 1)
+and crossing two genes may include a variance factor (default 0)
+
+*/
+
 public class Gene {
-    float min;
-    float max;
-    Gene(float min, float max) {
-        this.min = min;
-        this.max = max;
+    public float value;
+    public float scale;
+    public Gene(float value, float scale = 1) {
+        this.value = value;
+        this.scale = scale;
+    }
+
+    // currently Rectangular distribution of width this.variance, prefer triangular?
+    // keep the same scale for now
+    public Gene mutate(Gene original, float variance){
+        float result_value = original.value + variance*(Random.value-0.5f);
+        result_value = Mathf.Clamp(result_value,0,1);
+        return new Gene(result_value,original.scale);
+    }
+    public Gene cross(Gene a, Gene b, float variance = 0){
+        return new Gene((a.value + b.value)/2, (a.scale+b.scale)/2);
+
+    }
+    public Gene mendelian<Gene>(Gene a, Gene b){
+        throw new System.NotImplementedException();
     }
 }
