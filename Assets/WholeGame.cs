@@ -43,6 +43,7 @@ public class WholeGame : MonoBehaviour
                 {"h", new Gene(Random.value)},
                 {"s", new Gene(1)},
                 {"v", new Gene(1)},
+                {"sightRange", new Gene(0.5f,100f)}
             };
             omni.SetGenome(genome);
             result.Add(c);

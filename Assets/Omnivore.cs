@@ -8,7 +8,8 @@ public class Omnivore : MonoBehaviour
     // genome is set at birth and immutable
     public Dictionary<string,Gene> genome;
     // non-heritable state:
-    float energy = 30.0f;
+    float hunger = 0.0f;
+    float thirst = 0.0f;
     Vector3 target;
 
     // Start is called before the first frame update
@@ -25,9 +26,14 @@ public class Omnivore : MonoBehaviour
         if (Vector3.Distance(rb.position,target)<1.0){
             // do stuff with target
             // then set new target
-            target = new Vector3(
-                Random.value * 100 - 50, 1, Random.value * 100 - 50
-            );
+            GameObject targetObject = closestVisiblePlant();
+            if (closestVisiblePlant()!=null){
+                target = targetObject.transform.position;
+            } else {
+                target = new Vector3(
+                    Random.value * 100 - 50, 1, Random.value * 100 - 50
+                );
+            }
         }
 
 
@@ -58,7 +64,7 @@ public class Omnivore : MonoBehaviour
     public void createOffspring(AnimalGenome mate) {
 
     }
-    GameObject closestVisible(string thing){
+    GameObject closestVisiblePlant(){
         // find nearby things!
         Collider[] nearbyObjects = Physics.OverlapSphere(rb.position,genome["sightRange"].value());
         // find closest thing
@@ -66,7 +72,8 @@ public class Omnivore : MonoBehaviour
         GameObject nearestThing = null;
         foreach (Collider c in nearbyObjects){
             // Debug.Log($"name is {c.gameObject.name}");
-            if (c.gameObject.name.StartsWith(thing)){
+            Plant plt = c.gameObject.GetComponent<Plant>();
+            if (plt != null){
                 float dist = Vector3.Distance(rb.position,c.gameObject.transform.position);
                 if (dist < minDist & c.gameObject != gameObject){
                     minDist = dist;
