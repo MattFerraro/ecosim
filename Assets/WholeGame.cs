@@ -51,14 +51,14 @@ public class WholeGame : MonoBehaviour
         plt.SetGenome(
             prefab: plant,
             maxSize: 7,
-            growthSpeed: .2f,
+            growthSpeed: .4f,
             energyCollectionEfficiency: 3f,
             inputEnergy: 2,
             h: .05f,
             s: .9f,
             v: .8f,
             restingEnergy: 5,
-            energyPerSeed: 20);
+            energyPerSeed: 15);
 
         // Medium sized tree
         go = (GameObject)Instantiate(plant, new Vector3(4f, 0, -4f), Quaternion.identity);
@@ -66,14 +66,14 @@ public class WholeGame : MonoBehaviour
         plt.SetGenome(
             prefab: plant,
             maxSize: 3,
-            growthSpeed: .2f,
+            growthSpeed: .4f,
             energyCollectionEfficiency: 3f,
             inputEnergy: 1,
             h: .27f,
             s: .9f,
             v: .5f,
-            restingEnergy: 5,
-            energyPerSeed: 20); // offspring starts at size 20/10 = 2
+            restingEnergy: 3,
+            energyPerSeed: 15); // offspring starts at size 20/10 = 2
 
 
         // Let's make some small shrubs

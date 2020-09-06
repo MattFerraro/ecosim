@@ -276,5 +276,11 @@ MonoBehaviour:
   maxSize: 2
   growthSpeed: 1
   energyCollectionEfficiency: 1
+  restingEnergy: 0
+  energyPerSeed: 0
+  h: 0
+  s: 0
+  v: 0
   energy: 1
   size: 0
+  age: 0

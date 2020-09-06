@@ -24,12 +24,14 @@ public class Plant : MonoBehaviour
     public float energy;
     public float size;
 
+    public int age;
     // public Dictionary<string, Gene> Fields;
 
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        this.age += 1;
         // First we gotta subtract some energy
         this.energy -= 1.0f * Time.deltaTime;
         if (this.energy <= -1) {
@@ -140,6 +142,8 @@ public class Plant : MonoBehaviour
                 item.gameObject.GetComponent<Renderer>().material.color = Color.HSVToRGB(h, s, v);
             }
         }
+
+        this.age = 0;
     }
 
     // public void SetGenomeFields(GameObject prefab, Dictionary<string, Gene> newFields) {
