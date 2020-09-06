@@ -16,9 +16,8 @@ public class WholeGame : MonoBehaviour
     {
         // create starting animals
         bunnies.AddRange(CreateNBunnies(10));
-        foxes.AddRange(CreateNFoxes(2));
-        // test breed method
-        AnimalGenome.cross((AnimalGenome)foxes[0].GetComponent<Carnivore>().genome,(AnimalGenome)foxes[1].GetComponent<Carnivore>().genome);
+        // foxes.AddRange(CreateNFoxes(2));
+        // test cross methods here
 
         CreateStartingPlants();
     }
@@ -37,25 +36,34 @@ public class WholeGame : MonoBehaviour
                 new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
                 Quaternion.identity
             );
-            Herbivore herb = c.GetComponent<Herbivore>();
+            // Herbivore herb = c.GetComponent<Herbivore>();
+            Omnivore omni = c.GetComponent<Omnivore>();
+            // gene dictionary initialize!
+            Dictionary<string, Gene> genome = new Dictionary<string, Gene>(){
+                {"h", new Gene(Random.value)},
+                {"s", new Gene(1)},
+                {"v", new Gene(1)},
+            };
+            omni.SetGenome(genome);
             result.Add(c);
         }
         return result;
 	}
 
-    List<GameObject> CreateNFoxes (int n) {
-		List<GameObject> result = new List<GameObject>();
-        for (int i = 0; i < n; i++ ) {
-		    GameObject c = (GameObject)Instantiate(
-                fox, 
-                new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
-                Quaternion.identity
-            );
-            Carnivore carn = c.GetComponent<Carnivore>();
-            result.Add(c);
-        }
-        return result;
-	}
+    // List<GameObject> CreateNFoxes (int n) {
+	// 	List<GameObject> result = new List<GameObject>();
+    //     for (int i = 0; i < n; i++ ) {
+	// 	    GameObject c = (GameObject)Instantiate(
+    //             fox, 
+    //             new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
+    //             Quaternion.identity
+    //         );
+    //         //Carnivore carn = c.GetComponent<Carnivore>();
+    //         Omnivore omni = c.GetComponent<Omnivore>();
+    //         result.Add(c);
+    //     }
+    //     return result;
+	// }
 
     void CreateStartingPlants() {
         // Let's make a big tree in the center of the place Also it is red!
