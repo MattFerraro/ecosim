@@ -19,7 +19,7 @@ public class WholeGame : MonoBehaviour
         // foxes.AddRange(CreateNFoxes(2));
         // test cross methods here
 
-        // CreateStartingPlants();
+        CreateStartingPlants();
     }
 
     // Update is called once per frame
@@ -32,7 +32,7 @@ public class WholeGame : MonoBehaviour
 		List<GameObject> result = new List<GameObject>();
         for (int i = 0; i < n; i++ ) {
 		    GameObject c = (GameObject)Instantiate(
-                bunny, 
+                bunny,
                 new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
                 Quaternion.identity
             );
@@ -54,7 +54,7 @@ public class WholeGame : MonoBehaviour
 	// 	List<GameObject> result = new List<GameObject>();
     //     for (int i = 0; i < n; i++ ) {
 	// 	    GameObject c = (GameObject)Instantiate(
-    //             fox, 
+    //             fox,
     //             new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
     //             Quaternion.identity
     //         );
@@ -72,29 +72,29 @@ public class WholeGame : MonoBehaviour
         plt.SetGenome(
             prefab: plant,
             maxSize: 7,
-            growthSpeed: .2f,
-            energyCollectionEfficiency: 3f,
+            growthSpeed: .3f,
+            energyCollectionEfficiency: 2f,
             inputEnergy: 2,
             h: .05f,
-            s: .9f,
-            v: .8f,
+            s: 1,
+            v: 1,
             restingEnergy: 5,
             energyPerSeed: 20);
 
-        // Medium sized tree
-        go = (GameObject)Instantiate(plant, new Vector3(4f, 0, -4f), Quaternion.identity);
-        plt = go.GetComponent<Plant>();
-        plt.SetGenome(
-            prefab: plant,
-            maxSize: 3,
-            growthSpeed: .2f,
-            energyCollectionEfficiency: 3f,
-            inputEnergy: 1,
-            h: .27f,
-            s: .9f,
-            v: .5f,
-            restingEnergy: 5,
-            energyPerSeed: 20); // offspring starts at size 20/10 = 2
+        // // Medium sized tree
+        // go = (GameObject)Instantiate(plant, new Vector3(4f, 0, -4f), Quaternion.identity);
+        // plt = go.GetComponent<Plant>();
+        // plt.SetGenome(
+        //     prefab: plant,
+        //     maxSize: 3,
+        //     growthSpeed: .2f,
+        //     energyCollectionEfficiency: 3f,
+        //     inputEnergy: 1,
+        //     h: .27f,
+        //     s: .9f,
+        //     v: .5f,
+        //     restingEnergy: 5,
+        //     energyPerSeed: 20); // offspring starts at size 20/10 = 2
 
 
         // Let's make some small shrubs
