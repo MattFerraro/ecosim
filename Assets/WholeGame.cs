@@ -19,7 +19,7 @@ public class WholeGame : MonoBehaviour
         // foxes.AddRange(CreateNFoxes(2));
         // test cross methods here
 
-        CreateStartingPlants();
+        // CreateStartingPlants();
     }
 
     // Update is called once per frame
