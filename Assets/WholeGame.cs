@@ -6,16 +6,19 @@ public class WholeGame : MonoBehaviour
 {
     public GameObject bunny;
     public GameObject fox;
+    public GameObject omnivore;
 
     public GameObject plant;
     List<GameObject> bunnies = new List<GameObject>();
     List<GameObject> foxes = new List<GameObject>();
 
+    List<GameObject> omnivores = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
         // create starting animals
-        bunnies.AddRange(CreateNBunnies(10));
+        omnivores.AddRange(CreateNOmnivores(10));
         // foxes.AddRange(CreateNFoxes(2));
         // test cross methods here
 
@@ -28,24 +31,25 @@ public class WholeGame : MonoBehaviour
 
     }
 
-    List<GameObject> CreateNBunnies (int n) {
+    List<GameObject> CreateNOmnivores (int n) {
 		List<GameObject> result = new List<GameObject>();
         for (int i = 0; i < n; i++ ) {
 		    GameObject c = (GameObject)Instantiate(
-                bunny,
+                omnivore,
                 new Vector3(Random.value * 100 - 50, 1, Random.value * 100 - 50),
                 Quaternion.identity
             );
-            // Herbivore herb = c.GetComponent<Herbivore>();
             Omnivore omni = c.GetComponent<Omnivore>();
             // gene dictionary initialize!
             Dictionary<string, Gene> genome = new Dictionary<string, Gene>(){
-                {"h", new Gene(Random.value)},
+                {"h", new Gene(i % 2 == 0 ? 0: 0.8f)},
                 {"s", new Gene(1)},
                 {"v", new Gene(1)},
+                {"sex", new Gene(i % 2 == 0 ? 0: 1, 1, "binary")},
+                {"id", new Gene(i / 65000.0f)},
                 {"sightRange", new Gene(1.0f,100f)}
             };
-            omni.SetGenome(genome);
+            omni.SetGenome(omnivore, genome);
             result.Add(c);
         }
         return result;
@@ -68,7 +72,7 @@ public class WholeGame : MonoBehaviour
 
     void CreateStartingPlants() {
         // Let's make a big tree in the center of the place Also it is red!
-        GameObject go = (GameObject)Instantiate(plant, new Vector3(4f, 0, 4f), Quaternion.identity);
+        GameObject go = (GameObject)Instantiate(plant, new Vector3(0f, 0, 0f), Quaternion.identity);
         Plant plt = go.GetComponent<Plant>();
         plt.SetGenome(
             prefab: plant,
@@ -82,14 +86,43 @@ public class WholeGame : MonoBehaviour
             restingEnergy: 5,
             energyPerSeed: 20);
 
+
+        go = (GameObject)Instantiate(plant, new Vector3(15f, 0, 0f), Quaternion.identity);
+        plt = go.GetComponent<Plant>();
+        plt.SetGenome(
+            prefab: plant,
+            maxSize: 6.35f,
+            growthSpeed: .3021f,
+            energyCollectionEfficiency: 2.3032f,
+            inputEnergy: 2,
+            h: .05f,
+            s: 1,
+            v: 1,
+            restingEnergy: 5,
+            energyPerSeed: 20);
+
+        go = (GameObject)Instantiate(plant, new Vector3(0, 0, 15), Quaternion.identity);
+        plt = go.GetComponent<Plant>();
+        plt.SetGenome(
+            prefab: plant,
+            maxSize: 7.2f,
+            growthSpeed: .312f,
+            energyCollectionEfficiency: 2.012f,
+            inputEnergy: 2,
+            h: .05f,
+            s: 1,
+            v: 1,
+            restingEnergy: 5,
+            energyPerSeed: 20);
+
         // // Medium sized tree
         // go = (GameObject)Instantiate(plant, new Vector3(4f, 0, -4f), Quaternion.identity);
         // plt = go.GetComponent<Plant>();
         // plt.SetGenome(
         //     prefab: plant,
         //     maxSize: 3,
-        //     growthSpeed: .2f,
-        //     energyCollectionEfficiency: 3f,
+        //     growthSpeed: .3f,
+        //     energyCollectionEfficiency: 2f,
         //     inputEnergy: 1,
         //     h: .27f,
         //     s: .9f,

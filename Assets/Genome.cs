@@ -9,22 +9,22 @@ using UnityEngine;
 // if a genome is_compatible with another, you can cross them to get a result genome
 public class Genome
 {
-    static float distance(Dictionary<string,Gene> a, Dictionary<string,Gene> b){
+    public static float distance(Dictionary<string,Gene> a, Dictionary<string,Gene> b){
         //throw System.NotImplementedException();
         return 0;
     }
-    static Dictionary<string,Gene> cross(
-            Dictionary<string,Gene> genome_a, 
+    public static Dictionary<string,Gene> cross(
+            Dictionary<string,Gene> genome_a,
             Dictionary<string,Gene> genome_b
         ){
         // check speciation
-        if (!Genome.is_compatible(genome_a,genome_b)){
-            return null;
-        }
+        // if (!Genome.is_compatible(genome_a,genome_b)){
+        //     return null;
+        // }
 
         var output = new Dictionary<string,Gene>();
         foreach (string name in genome_a.Keys){
-            output.Add(name,genome_a[name].cross(genome_b[name]));
+            output.Add(name, genome_a[name].cross(genome_b[name]));
         }
         return output;
     }
@@ -35,52 +35,52 @@ public class Genome
 
 }
 
-// any organism has a genome, just a dictionary with specific Genes.
-public class PlantGenome {
-    public Gene maxSize;
-    public Gene growthSpeed;
-    public Gene energyCollectionEfficiency;
-    // color genes
-    public Gene h;
-    public Gene s;
-    public Gene v;
+// // any organism has a genome, just a dictionary with specific Genes.
+// public class PlantGenome {
+//     public Gene maxSize;
+//     public Gene growthSpeed;
+//     public Gene energyCollectionEfficiency;
+//     // color genes
+//     public Gene h;
+//     public Gene s;
+//     public Gene v;
 
-    public PlantGenome() {
+//     public PlantGenome() {
 
-    }
-}
+//     }
+// }
 
-public class AnimalGenome {
-    public Gene maxSize;
-    public Gene pace;
-    public Gene jump;
-    public Gene digestionEfficiency;
-    // color genes
-    public Gene h;
-    public Gene s;
-    public Gene v;
-    public AnimalGenome() {
+// public class AnimalGenome {
+//     public Gene maxSize;
+//     public Gene pace;
+//     public Gene jump;
+//     public Gene digestionEfficiency;
+//     // color genes
+//     public Gene h;
+//     public Gene s;
+//     public Gene v;
+//     public AnimalGenome() {
 
-    }
-    public static void cross(AnimalGenome a, AnimalGenome b) {
-        AnimalGenome result = new AnimalGenome();
-        // property checker
-        FieldInfo[] fieldInfos = typeof(AnimalGenome).GetFields(BindingFlags.Public);
-        foreach (FieldInfo fi in fieldInfos) {
-            Debug.Log("AG FieldName: " + fi.Name);
-        }
-        
-    }
-}
+//     }
+//     public static void cross(AnimalGenome a, AnimalGenome b) {
+//         AnimalGenome result = new AnimalGenome();
+//         // property checker
+//         FieldInfo[] fieldInfos = typeof(AnimalGenome).GetFields(BindingFlags.Public);
+//         foreach (FieldInfo fi in fieldInfos) {
+//             Debug.Log("AG FieldName: " + fi.Name);
+//         }
 
-public class PredatorGenome : AnimalGenome {
-    //public diet;, list of prey?
-    //
-    public Gene preySize;
-}
+//     }
+// }
+
+// public class PredatorGenome : AnimalGenome {
+//     //public diet;, list of prey?
+//     //
+//     public Gene preySize;
+// }
 
 
-/* 
+/*
 any gene has a value between 0 and 1,
 and a scaling factor (default 1)
 and crossing two genes may include a variance factor (default 0)
@@ -90,9 +90,11 @@ and crossing two genes may include a variance factor (default 0)
 public class Gene {
     private float _value;
     private float _scale;
-    public Gene(float value, float scale = 1) {
+    private string crossMode;
+    public Gene(float value, float scale = 1, string crossMode = "float") {
         this._value = value;
         this._scale = scale;
+        this.crossMode = crossMode;
     }
     public float value(){
         return this._value * this._scale;
@@ -106,7 +108,20 @@ public class Gene {
         return new Gene(result_value,original._scale);
     }
     public Gene cross(Gene b, float variance = 0){
-        return new Gene((this._value + b._value)/2, (this._scale+b._scale)/2);
+        if (this.crossMode == "float") {
+            return new Gene((this._value + b._value)/2, (this._scale+b._scale)/2);
+        } else if (this.crossMode == "binary") {
+            float val = Random.value;
+            if (val >= 0.5) {
+                Debug.Log("Binary crossing Returning: " + this._value);
+                return new Gene(this._value, this._scale, "binary");
+            } else {
+                Debug.Log("Binary Crossing Returning: " + b._value);
+                return new Gene(b._value, b._scale, "binary");
+            }
+        } else {
+            throw new System.NotImplementedException();
+        }
 
     }
     public Gene mendelian<Gene>(Gene a, Gene b){
