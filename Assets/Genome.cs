@@ -24,7 +24,8 @@ public class Genome
 
         var output = new Dictionary<string,Gene>();
         foreach (string name in genome_a.Keys){
-            output.Add(name, genome_a[name].cross(genome_b[name]));
+            Gene newGene = Gene.mutate(genome_a[name].cross(genome_b[name]));
+            output.Add(name, newGene);
         }
         return output;
     }
@@ -91,10 +92,14 @@ public class Gene {
     private float _value;
     private float _scale;
     private string crossMode;
-    public Gene(float value, float scale = 1, string crossMode = "float") {
+    private string mutateMode;
+
+    public static float mutationRate = 0.1f;
+    public Gene(float value, float scale = 1, string crossMode = "float", string mutateMode = "multiply") {
         this._value = value;
         this._scale = scale;
         this.crossMode = crossMode;
+        this.mutateMode = mutateMode;
     }
     public float value(){
         return this._value * this._scale;
@@ -102,22 +107,27 @@ public class Gene {
 
     // currently Rectangular distribution of width this.variance, prefer triangular?
     // keep the same scale for now
-    public Gene mutate(Gene original, float variance){
-        float result_value = original._value + variance*(Random.value-0.5f);
-        result_value = Mathf.Clamp(result_value,0,1);
-        return new Gene(result_value,original._scale);
+    public static Gene mutate(Gene original){
+        if (original.mutateMode == "none") {
+            return original;
+        } else if (original.mutateMode == "multiply") {
+            float randomness = (Random.value - 0.5f) * mutationRate; // random value between [-mutationRate/2, mutationRate/2]
+            float result_value = original._value * (1 + randomness);
+            result_value = Mathf.Clamp(result_value, 0, 1);
+            return new Gene(result_value, original._scale, crossMode: original.crossMode, mutateMode: original.mutateMode);
+        } else {
+            throw new System.NotImplementedException();
+        }
     }
-    public Gene cross(Gene b, float variance = 0){
+    public Gene cross(Gene b){
         if (this.crossMode == "float") {
-            return new Gene((this._value + b._value)/2, (this._scale+b._scale)/2);
+            return new Gene((this._value + b._value)/2, (this._scale+b._scale)/2, crossMode: "float", mutateMode: this.mutateMode);
         } else if (this.crossMode == "binary") {
             float val = Random.value;
             if (val >= 0.5) {
-                Debug.Log("Binary crossing Returning: " + this._value);
-                return new Gene(this._value, this._scale, "binary");
+                return new Gene(this._value, this._scale, crossMode: "binary", mutateMode: this.mutateMode);
             } else {
-                Debug.Log("Binary Crossing Returning: " + b._value);
-                return new Gene(b._value, b._scale, "binary");
+                return new Gene(b._value, b._scale, crossMode: "binary", mutateMode: this.mutateMode);
             }
         } else {
             throw new System.NotImplementedException();

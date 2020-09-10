@@ -45,6 +45,9 @@ public class WholeGame : MonoBehaviour
                 {"h", new Gene(i % 2 == 0 ? 0: 0.8f)},
                 {"s", new Gene(1)},
                 {"v", new Gene(1)},
+                {"walkspeed", new Gene(0.03f)},
+                {"size", new Gene(0.05f, 10)},
+                {"ageToReproduce", new Gene(0.1f, 100)},
                 {"sex", new Gene(i % 2 == 0 ? 0: 1, 1, "binary")},
                 {"id", new Gene(i / 65000.0f)},
                 {"sightRange", new Gene(1.0f,100f)}
@@ -87,7 +90,7 @@ public class WholeGame : MonoBehaviour
             energyPerSeed: 20);
 
 
-        go = (GameObject)Instantiate(plant, new Vector3(15f, 0, 0f), Quaternion.identity);
+        go = (GameObject)Instantiate(plant, new Vector3(25f, 0, 0f), Quaternion.identity);
         plt = go.GetComponent<Plant>();
         plt.SetGenome(
             prefab: plant,
@@ -101,7 +104,7 @@ public class WholeGame : MonoBehaviour
             restingEnergy: 5,
             energyPerSeed: 20);
 
-        go = (GameObject)Instantiate(plant, new Vector3(0, 0, 15), Quaternion.identity);
+        go = (GameObject)Instantiate(plant, new Vector3(0, 0, 25), Quaternion.identity);
         plt = go.GetComponent<Plant>();
         plt.SetGenome(
             prefab: plant,
