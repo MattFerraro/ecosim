@@ -8,7 +8,7 @@ public class TextTag : MonoBehaviour
     public Text textLabel;
     public int offsetY;
     // Update is called once per frame
-    void FixedUpdate()
+    void OnGUI()
     {
         Vector3 textPos = Camera.main.WorldToScreenPoint(this.transform.position);
 
